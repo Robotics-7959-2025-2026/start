@@ -20,8 +20,6 @@ import com.qualcomm.robotcore.hardware.Servo;
 
 
 @TeleOp(name="Tutorial")
-
-
 public class exampleteleop extends LinearOpMode {
     //motors (view from back in terms of L & R)
     private DcMotor RightFront = null;
