@@ -4,6 +4,7 @@ import com.qualcomm.robotcore.eventloop.opmode.LinearOpMode;
 import com.qualcomm.robotcore.eventloop.opmode.TeleOp;
 import com.qualcomm.robotcore.hardware.DcMotor;
 import com.qualcomm.robotcore.hardware.DcMotorSimple;
+import com.qualcomm.robotcore.hardware.Servo;
 
 @TeleOp(name = "mine")
 public class mineTeleop extends LinearOpMode {
@@ -12,6 +13,9 @@ public class mineTeleop extends LinearOpMode {
     private DcMotor lbMotor = null;
     private DcMotor rbMotor = null;
 
+    private DcMotor shooterMotor = null;
+    private Servo shooterServo = null;
+
     private double ctrlPow = 1.0;
 
     public void runOpMode() {
@@ -19,11 +23,15 @@ public class mineTeleop extends LinearOpMode {
         rfMotor = hardwareMap.get(DcMotor.class, "front_right_drive");
         rbMotor = hardwareMap.get(DcMotor.class, "back_left_drive");
         lbMotor = hardwareMap.get(DcMotor.class, "back_right_drive");
+        // TODO!: Get shooterMotor & servo from hardwareMap
 
         lfMotor.setDirection(DcMotorSimple.Direction.FORWARD);
         rfMotor.setDirection(DcMotorSimple.Direction.REVERSE);
         lbMotor.setDirection(DcMotorSimple.Direction.FORWARD);
         rbMotor.setDirection(DcMotorSimple.Direction.REVERSE);
+        shooterMotor.setDirection(DcMotorSimple.Direction.REVERSE);
+
+        shooterServo.setDirection(Servo.Direction.REVERSE);
 
         telemetry.addData("Status", "Initialized");
         telemetry.update();
@@ -39,6 +47,19 @@ public class mineTeleop extends LinearOpMode {
             rfMotor.setPower(Math.pow(y - x - rx, ctrlPow) * Math.signum(y - x - rx));
             lbMotor.setPower(Math.pow(y - x + rx, ctrlPow) * Math.signum(y - x + rx));
             rbMotor.setPower(Math.pow(y + x - rx, ctrlPow) * Math.signum(y + x - rx));
+
+            // Press D-Up to spin the launcher, then D-Down (while still holding) to lift the servo
+            if (gamepad1.dpad_up) {
+                shooterMotor.setPower(1.0);
+
+                if (gamepad1.dpad_down) {
+                    // TODO: shooterServo.setPosition();
+                } else {
+                    // TODO: shooterServo.setPosition();
+                }
+            } else{
+                shooterMotor.setPower(0.0);
+            }
         }
     }
 }
