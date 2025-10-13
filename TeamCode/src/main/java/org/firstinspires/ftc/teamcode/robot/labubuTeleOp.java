@@ -3,60 +3,69 @@ package org.firstinspires.ftc.teamcode.robot;
 import com.qualcomm.robotcore.eventloop.opmode.LinearOpMode;
 import com.qualcomm.robotcore.eventloop.opmode.TeleOp;
 import com.qualcomm.robotcore.hardware.DcMotor;
+import com.qualcomm.robotcore.hardware.DcMotorSimple;
+import com.qualcomm.robotcore.hardware.Servo;
 
-/** TODO:
- *
- * Drive system: Done, mechania drive copied from 2024-2025 year
- * Launching system: A[] B[]
- *    - (A) Intake: Not done, hasn't been built yet
- *    - (B) Launcher: Not done, hasn't been built yet
- *
- * Auton: I (Bennett) have to learn how to do it. If anyone else
- *        knows how to do it feel free to contribute
- */
-@TeleOp(name="labubu")
+@TeleOp(name = "mine")
 public class labubuTeleOp extends LinearOpMode {
+    private DcMotor lfMotor = null;
+    private DcMotor rfMotor = null;
+    private DcMotor lbMotor = null;
+    private DcMotor rbMotor = null;
 
-    private DcMotor RightFront = null;
-    private DcMotor LeftFront = null;
-    private DcMotor RightBack = null;
-    private DcMotor LeftBack = null;
+    private DcMotor shooterMotor = null;
+    private Servo shooterServo = null;
 
-    public void runOpMode() throws InterruptedException {
+    private double ctrlPow = 1.0;
 
+    public void runOpMode() {
+        lfMotor = hardwareMap.get(DcMotor.class, "front_left_drive");
+        rfMotor = hardwareMap.get(DcMotor.class, "front_right_drive");
+        rbMotor = hardwareMap.get(DcMotor.class, "back_left_drive");
+        lbMotor = hardwareMap.get(DcMotor.class, "back_right_drive");
+        // TODO!: Get shooterMotor & servo from hardwareMap
 
-        RightFront = hardwareMap.dcMotor.get("RightFront");
-        RightFront.setDirection(DcMotor.Direction.REVERSE);
+        lfMotor.setDirection(DcMotorSimple.Direction.FORWARD);
+        rfMotor.setDirection(DcMotorSimple.Direction.REVERSE);
+        lbMotor.setDirection(DcMotorSimple.Direction.FORWARD);
+        rbMotor.setDirection(DcMotorSimple.Direction.REVERSE);
+        shooterMotor.setDirection(DcMotorSimple.Direction.REVERSE);
 
-        LeftFront = hardwareMap.dcMotor.get("LeftFront");
-        LeftFront.setDirection(DcMotor.Direction.FORWARD);
+        shooterServo.setDirection(Servo.Direction.REVERSE);
 
-        RightBack = hardwareMap.dcMotor.get("RightBack");
-        RightBack.setDirection(DcMotor.Direction.REVERSE);
-
-        LeftBack = hardwareMap.dcMotor.get("LeftBack");
-        LeftBack.setDirection(DcMotor.Direction.FORWARD);
-
+        telemetry.addData("Status", "Initialized");
+        telemetry.update();
 
         waitForStart();
+
         while (opModeIsActive()) {
             telemetry.update();
+
+            if (Math.abs(gamepad1.left_stick_x) + Math.abs(gamepad1.left_stick_y) < 0.1) {
+                continue;
+            }
+
+            double x = gamepad1.left_stick_x;
+            double y = gamepad1.left_stick_y;
+            double rx = gamepad1.right_stick_x * 0.85;
+
+            lfMotor.setPower(Math.pow(y + x + rx, ctrlPow) * Math.signum(y + x + rx));
+            rfMotor.setPower(Math.pow(y - x - rx, ctrlPow) * Math.signum(y - x - rx));
+            lbMotor.setPower(Math.pow(y - x + rx, ctrlPow) * Math.signum(y - x + rx));
+            rbMotor.setPower(Math.pow(y + x - rx, ctrlPow) * Math.signum(y + x - rx));
+
+            // Press D-Up to spin the launcher, then D-Down (while still holding) to lift the servo
+            if (gamepad1.dpad_up) {
+                shooterMotor.setPower(1.0);
+
+                if (gamepad1.dpad_down) {
+                    // TODO: shooterServo.setPosition();
+                } else {
+                    // TODO: shooterServo.setPosition();
+                }
+            } else{
+                shooterMotor.setPower(0.0);
+            }
         }
-
-        if (gamepad1.left_stick_x > 0.2 || gamepad1.left_stick_x < -0.2 || gamepad1.left_stick_y > 0.2 || gamepad1.left_stick_y < -0.2){
-
-            double y = -gamepad1.left_stick_x;
-            double x = gamepad1.left_stick_y;
-            double rx = gamepad1.right_stick_x;
-            double div = Math.max(Math.abs(y) + Math.abs(x) + Math.abs(rx), 1);
-
-            LeftFront.setPower(Math.pow((y + x - (rx*.85)),5)/div);
-            LeftBack.setPower(Math.pow((y - x + (rx*.85)),5)/div);
-            RightFront.setPower(Math.pow((y - x - (rx*.85)),5)/div);
-            RightBack.setPower(Math.pow((y + x + (rx*.85)),5)/div);
-
-        }
-
     }
-
 }
