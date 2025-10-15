@@ -34,8 +34,8 @@ public class labubuTeleOp extends LinearOpMode {
         rfMotor = hardwareMap.get(DcMotor.class, "front_right_drive");
         rbMotor = hardwareMap.get(DcMotor.class, "back_left_drive");
         lbMotor = hardwareMap.get(DcMotor.class, "back_right_drive");
-        
 
+        // Sets the directions of the motors for the driving.
         lfMotor.setDirection(DcMotorSimple.Direction.FORWARD);
         rfMotor.setDirection(DcMotorSimple.Direction.REVERSE);
         lbMotor.setDirection(DcMotorSimple.Direction.FORWARD);
