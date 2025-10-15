@@ -84,6 +84,8 @@ public class labubuTeleOp extends LinearOpMode {
 
             // Note: above code is impossible. You can't press D-Up AND D-Down at the same time.
 
+
+            // My head hurts too much to do rotation right now so ima not do it - Bennett
             if (gamepad1.left_bumper){
 
                 shooterMotor.setPower(1.0);
