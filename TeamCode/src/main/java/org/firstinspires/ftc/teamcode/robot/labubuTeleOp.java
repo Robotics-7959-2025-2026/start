@@ -1,3 +1,12 @@
+/*
+TLDR:
+
+Left Stick is mechina drive.
+Right Stick rotates the robot
+Left bumper spins the shooter motor to shoot the john
+Right bumper rotates the servo that rotates the platform that lifts the john into position to be shot
+
+ */
 package org.firstinspires.ftc.teamcode.robot;
 
 import com.qualcomm.robotcore.eventloop.opmode.LinearOpMode;
