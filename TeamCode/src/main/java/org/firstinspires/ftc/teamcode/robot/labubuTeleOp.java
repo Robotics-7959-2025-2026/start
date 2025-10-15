@@ -28,6 +28,8 @@ public class labubuTeleOp extends LinearOpMode {
     private double ctrlPow = 1.0;
 
     public void runOpMode() {
+
+        // Defines motors to the hardwareMap (in order words, the driver station)
         lfMotor = hardwareMap.get(DcMotor.class, "front_left_drive");
         rfMotor = hardwareMap.get(DcMotor.class, "front_right_drive");
         rbMotor = hardwareMap.get(DcMotor.class, "back_left_drive");
