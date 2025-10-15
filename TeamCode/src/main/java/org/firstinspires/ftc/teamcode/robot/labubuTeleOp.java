@@ -78,6 +78,16 @@ public class labubuTeleOp extends LinearOpMode {
                 shooterMotor.setPower(0);
 
             }
+
+            if (gamepad1.right_bumper) {
+
+                shooterServo.setPosition(0.05);
+
+            }else{
+
+                shooterServo.setPosition(0);
+
+            }
         }
     }
 }
