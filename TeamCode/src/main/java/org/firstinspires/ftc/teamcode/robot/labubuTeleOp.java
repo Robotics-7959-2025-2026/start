@@ -55,7 +55,7 @@ public class labubuTeleOp extends LinearOpMode {
             rbMotor.setPower(Math.pow(y + x - rx, ctrlPow) * Math.signum(y + x - rx));
 
             // Press D-Up to spin the launcher, then D-Down (while still holding) to lift the servo
-            if (gamepad1.dpad_up) {
+            /*if (gamepad1.dpad_up) {
                 shooterMotor.setPower(1.0);
 
                 if (gamepad1.dpad_down) {
