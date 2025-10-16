@@ -6,7 +6,7 @@ import com.qualcomm.robotcore.hardware.DcMotor;
 import com.qualcomm.robotcore.hardware.DcMotorSimple;
 import com.qualcomm.robotcore.hardware.Servo;
 
-@TeleOp(name = "mine")
+@TeleOp(name = "labubu")
 public class labubuTeleOp extends LinearOpMode {
     private DcMotor lfMotor = null;
     private DcMotor rfMotor = null;
