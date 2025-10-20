@@ -10,8 +10,8 @@ import com.qualcomm.robotcore.hardware.Servo;
 public class labubuTeleOp extends LinearOpMode {
     private DcMotor lfMotor = null;
     private DcMotor rfMotor = null;
-    private DcMotor lbMotor = null;
-    private DcMotor rbMotor = null;
+    //private DcMotor lbMotor = null;
+    //private DcMotor rbMotor = null;
 
     private DcMotor shooterMotor = null;
     private Servo shooterServo = null;
@@ -19,16 +19,17 @@ public class labubuTeleOp extends LinearOpMode {
     private double ctrlPow = 1.0;
 
     public void runOpMode() {
-        lfMotor = hardwareMap.get(DcMotor.class, "front_left_drive");
-        rfMotor = hardwareMap.get(DcMotor.class, "front_right_drive");
-        rbMotor = hardwareMap.get(DcMotor.class, "back_left_drive");
-        lbMotor = hardwareMap.get(DcMotor.class, "back_right_drive");
+        lfMotor = hardwareMap.get(DcMotor.class, "left");
+        rfMotor = hardwareMap.get(DcMotor.class, "right");
+        //rbMotor = hardwareMap.get(DcMotor.class, "back_left_drive");
+        //lbMotor = hardwareMap.get(DcMotor.class, "back_right_drive");
+        shooterMotor = hardwareMap.get(DcMotor.class, "shooterMotor");
         // TODO!: Get shooterMotor & servo from hardwareMap
 
         lfMotor.setDirection(DcMotorSimple.Direction.FORWARD);
         rfMotor.setDirection(DcMotorSimple.Direction.REVERSE);
-        lbMotor.setDirection(DcMotorSimple.Direction.FORWARD);
-        rbMotor.setDirection(DcMotorSimple.Direction.REVERSE);
+        //lbMotor.setDirection(DcMotorSimple.Direction.FORWARD);
+        //rbMotor.setDirection(DcMotorSimple.Direction.REVERSE);
         shooterMotor.setDirection(DcMotorSimple.Direction.REVERSE);
 
         shooterServo.setDirection(Servo.Direction.REVERSE);
@@ -41,24 +42,30 @@ public class labubuTeleOp extends LinearOpMode {
         while (opModeIsActive()) {
             telemetry.update();
 
-            if (Math.abs(gamepad1.left_stick_x) + Math.abs(gamepad1.left_stick_y) < 0.1) {
-                continue;
-            }
+//            if (Math.abs(gamepad1.left_stick_x) + Math.abs(gamepad1.left_stick_y) < 0.1) {
+//                continue;
+//            }
+//
+//            double x = gamepad1.left_stick_x;
+//            double y = gamepad1.left_stick_y;
+//            double rx = gamepad1.right_stick_x * 0.85;
+//
+//            lfMotor.setPower(Math.pow(y + x + rx, ctrlPow) * Math.signum(y + x + rx));
+//            rfMotor.setPower(Math.pow(y - x - rx, ctrlPow) * Math.signum(y - x - rx));
+//            lbMotor.setPower(Math.pow(y - x + rx, ctrlPow) * Math.signum(y - x + rx));
+//            rbMotor.setPower(Math.pow(y + x - rx, ctrlPow) * Math.signum(y + x - rx));
 
-            double x = gamepad1.left_stick_x;
-            double y = gamepad1.left_stick_y;
-            double rx = gamepad1.right_stick_x * 0.85;
+            double l = gamepad1.right_stick_y;
+            double r = gamepad1.left_stick_y;
 
-            lfMotor.setPower(Math.pow(y + x + rx, ctrlPow) * Math.signum(y + x + rx));
-            rfMotor.setPower(Math.pow(y - x - rx, ctrlPow) * Math.signum(y - x - rx));
-            lbMotor.setPower(Math.pow(y - x + rx, ctrlPow) * Math.signum(y - x + rx));
-            rbMotor.setPower(Math.pow(y + x - rx, ctrlPow) * Math.signum(y + x - rx));
+            lfMotor.setPower(l);
+            rfMotor.setPower(r);
 
-            // Press D-Up to spin the launcher, then D-Down (while still holding) to lift the servo
-            if (gamepad1.dpad_up) {
+            // Hold left bumper to spin, then press the right bumper to shoot
+            if (gamepad1.left_bumper) {
                 shooterMotor.setPower(1.0);
 
-                if (gamepad1.dpad_down) {
+                if (gamepad1.right_bumper) {
                     // TODO: shooterServo.setPosition();
                 } else {
                     // TODO: shooterServo.setPosition();
