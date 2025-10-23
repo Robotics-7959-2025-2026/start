@@ -10,8 +10,8 @@ import com.qualcomm.robotcore.hardware.Servo;
 public class labubuTeleOp extends LinearOpMode {
     private DcMotor lfMotor = null;
     private DcMotor rfMotor = null;
-    //private DcMotor lbMotor = null;
-    //private DcMotor rbMotor = null;
+    private DcMotor lbMotor = null;
+    private DcMotor rbMotor = null;
 
     private DcMotor shooterMotor = null;
     private Servo shooterServo = null;
