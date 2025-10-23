@@ -21,8 +21,8 @@ public class labubuTeleOp extends LinearOpMode {
     public void runOpMode() {
         lfMotor = hardwareMap.get(DcMotor.class, "left");
         rfMotor = hardwareMap.get(DcMotor.class, "right");
-        //rbMotor = hardwareMap.get(DcMotor.class, "back_left_drive");
-        //lbMotor = hardwareMap.get(DcMotor.class, "back_right_drive");
+        rbMotor = hardwareMap.get(DcMotor.class, "back_left_drive");
+        lbMotor = hardwareMap.get(DcMotor.class, "back_right_drive");
         shooterMotor = hardwareMap.get(DcMotor.class, "shooterMotor");
         // TODO!: Get shooterMotor & servo from hardwareMap
 
