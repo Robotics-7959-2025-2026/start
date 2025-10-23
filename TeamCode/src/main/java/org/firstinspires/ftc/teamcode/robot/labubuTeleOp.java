@@ -58,8 +58,11 @@ public class labubuTeleOp extends LinearOpMode {
             double l = gamepad1.right_stick_y;
             double r = gamepad1.left_stick_y;
 
-            lfMotor.setPower(l);
-            rfMotor.setPower(r);
+            //double l = gamepad1.right_stick_y;
+            //double r = gamepad1.left_stick_y;
+
+            //lfMotor.setPower(l);
+            //rfMotor.setPower(r);
 
             // Hold left bumper to spin, then press the right bumper to shoot
             if (gamepad1.left_bumper) {
