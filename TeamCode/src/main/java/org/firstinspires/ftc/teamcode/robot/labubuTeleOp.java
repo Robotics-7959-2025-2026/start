@@ -28,8 +28,8 @@ public class labubuTeleOp extends LinearOpMode {
 
         lfMotor.setDirection(DcMotorSimple.Direction.FORWARD);
         rfMotor.setDirection(DcMotorSimple.Direction.REVERSE);
-        //lbMotor.setDirection(DcMotorSimple.Direction.FORWARD);
-        //rbMotor.setDirection(DcMotorSimple.Direction.REVERSE);
+        lbMotor.setDirection(DcMotorSimple.Direction.FORWARD);
+        rbMotor.setDirection(DcMotorSimple.Direction.REVERSE);
         shooterMotor.setDirection(DcMotorSimple.Direction.REVERSE);
 
         shooterServo.setDirection(Servo.Direction.REVERSE);
