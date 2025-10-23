@@ -73,6 +73,8 @@ public class labubuTeleOp extends LinearOpMode {
             } else{
                 shooterMotor.setPower(0.0);
             }
+
+
         }
     }
 }
