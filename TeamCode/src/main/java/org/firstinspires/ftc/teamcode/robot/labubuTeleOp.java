@@ -6,6 +6,7 @@ import com.qualcomm.robotcore.hardware.DcMotor;
 import com.qualcomm.robotcore.hardware.DcMotorSimple;
 import com.qualcomm.robotcore.hardware.Servo;
 
+
 @TeleOp(name = "labubu")
 public class labubuTeleOp extends LinearOpMode {
     private DcMotor lfMotor = null;
@@ -15,6 +16,10 @@ public class labubuTeleOp extends LinearOpMode {
 
     private DcMotor shooterMotor = null;
     private Servo shooterServo = null;
+
+    static int INTAKE_POSITION = 2;
+    static int SHOOTING_POSITION = 0;
+    private BallType[] spindexSlots = {BallType.EMPTY, BallType.EMPTY, BallType.EMPTY};
 
     private double ctrlPow = 1.0;
 
@@ -76,5 +81,53 @@ public class labubuTeleOp extends LinearOpMode {
             
 
         }
+    }
+
+
+    private void fire(BallType select) {
+        // Disable intake
+
+        int index = -1;
+        for (int i = 0; i < 2; ++i) {
+            if (spindexSlots[i] == select) {
+                index = i;
+                break;
+            }
+        }
+
+        // Error! We don't have that ball loaded. Indicate to user?
+        if (index == -1) return;
+
+        for (int i = 0; i < index; ++i) {
+            cycleSpindexSlots();
+            // Rotate 120
+        }
+
+        // Rotate 60
+        // Shoot
+        // Rotate 60
+
+        // Move the newly-empty slot to [2]
+        spindexSlots[SHOOTING_POSITION] = BallType.EMPTY;
+        cycleSpindexSlots();
+        cycleSpindexSlots();
+        // Rotate 120
+
+        // Enable intake (guaranteed to work)
+    }
+
+    private void onIntake(BallType color) {
+        // Rotate 120
+        cycleSpindexSlots();
+        // Index 2 is now index 0
+        // Hithertofore, use shooting position instead
+        spindexSlots[SHOOTING_POSITION] = color;
+    }
+
+    private void cycleSpindexSlots() {
+        BallType z0 = spindexSlots[2];
+        spindexSlots[2] = spindexSlots[1];
+        spindexSlots[1] = spindexSlots[0];
+        spindexSlots[0] = z0;
     }
 }
