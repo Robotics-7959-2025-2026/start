@@ -46,8 +46,14 @@ public class labubuTeleOp extends LinearOpMode {
                   continue;
               }
 
-            double l = gamepad1.right_stick_y;
-            double r = gamepad1.left_stick_y;
+            double x = gamepad1.left_stick_x;
+            double y = gamepad1.left_stick_y;
+            double rx = gamepad1.right_stick_x * 0.85;
+
+            lfMotor.setPower(Math.pow(y + x + rx, ctrlPow) * Math.signum(y + x + rx));
+            rfMotor.setPower(Math.pow(y - x - rx, ctrlPow) * Math.signum(y - x - rx));
+            lbMotor.setPower(Math.pow(y - x + rx, ctrlPow) * Math.signum(y - x + rx));
+            rbMotor.setPower(Math.pow(y + x - rx, ctrlPow) * Math.signum(y + x - rx));
 
             //double l = gamepad1.right_stick_y;
             //double r = gamepad1.left_stick_y;
