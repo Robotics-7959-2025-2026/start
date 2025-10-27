@@ -19,19 +19,18 @@ public class labubuTeleOp extends LinearOpMode {
     private double ctrlPow = 1.0;
 
     public void runOpMode() {
-        lfMotor = hardwareMap.get(DcMotor.class, "leftFront");
-        rfMotor = hardwareMap.get(DcMotor.class, "rightFront");
-        rbMotor = hardwareMap.get(DcMotor.class, "backLeft");
-        lbMotor = hardwareMap.get(DcMotor.class, "backRight");
+        lfMotor = hardwareMap.get(DcMotor.class, "left_front_drive");
+        rfMotor = hardwareMap.get(DcMotor.class, "left_front_drive");
+        rbMotor = hardwareMap.get(DcMotor.class, "left_front_drive");
+        lbMotor = hardwareMap.get(DcMotor.class, "left_front_drive");
         shooterMotor = hardwareMap.get(DcMotor.class, "shooterMotor");
-        // TODO!: Get shooterMotor & servo from hardwareMap
+        shooterServo = hardwareMap.get(Servo.class, "shooterServo");
 
         lfMotor.setDirection(DcMotorSimple.Direction.FORWARD);
         rfMotor.setDirection(DcMotorSimple.Direction.REVERSE);
         lbMotor.setDirection(DcMotorSimple.Direction.FORWARD);
         rbMotor.setDirection(DcMotorSimple.Direction.REVERSE);
         shooterMotor.setDirection(DcMotorSimple.Direction.REVERSE);
-
         shooterServo.setDirection(Servo.Direction.REVERSE);
 
         telemetry.addData("Status", "Initialized");
@@ -55,11 +54,11 @@ public class labubuTeleOp extends LinearOpMode {
             lbMotor.setPower(Math.pow(y - x + rx, ctrlPow) * Math.signum(y - x + rx));
             rbMotor.setPower(Math.pow(y + x - rx, ctrlPow) * Math.signum(y + x - rx));
 
-            double l = gamepad1.right_stick_y;
-            double r = gamepad1.left_stick_y;
+            //double l = gamepad1.right_stick_y;
+            //double r = gamepad1.left_stick_y;
 
-            lfMotor.setPower(l);
-            rfMotor.setPower(r);
+            //lfMotor.setPower(l);
+            //rfMotor.setPower(r);
 
             // Hold left bumper to spin, then press the right bumper to shoot
             if (gamepad1.left_bumper) {
