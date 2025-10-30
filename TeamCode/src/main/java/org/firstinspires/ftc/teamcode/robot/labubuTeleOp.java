@@ -21,6 +21,8 @@ public class labubuTeleOp extends LinearOpMode {
     static int SHOOTING_POSITION = 0;
     private BallType[] spindexSlots = {BallType.EMPTY, BallType.EMPTY, BallType.EMPTY};
 
+    boolean firePressed = false;
+
     private double ctrlPow = 1.0;
 
     public void runOpMode() {
@@ -31,7 +33,6 @@ public class labubuTeleOp extends LinearOpMode {
         lbMotor = hardwareMap.get(DcMotor.class, "back_right_drive");
         shooterMotor = hardwareMap.get(DcMotor.class, "shooterMotor");
         shooterServo = hardwareMap.get(Servo.class, "shooterServo");
-        // TODO!: Get shooterMotor & servo from hardwareMap
 
         lfMotor.setDirection(DcMotorSimple.Direction.FORWARD);
         rfMotor.setDirection(DcMotorSimple.Direction.REVERSE);
@@ -48,24 +49,28 @@ public class labubuTeleOp extends LinearOpMode {
         while (opModeIsActive()) {
             telemetry.update();
 
-              if (Math.abs(gamepad1.left_stick_x) + Math.abs(gamepad1.left_stick_y) < 0.1) {
-                  continue;
-              }
+            if (Math.abs(gamepad1.left_stick_x) + Math.abs(gamepad1.left_stick_y) > 0.05
+                    || Math.abs(gamepad1.right_stick_x) > 0.03
+            ) {
+                double x = gamepad1.left_stick_x;
+                double y = gamepad1.left_stick_y;
+                double rx = gamepad1.right_stick_x * 0.85;
 
-            double x = gamepad1.left_stick_x;
-            double y = gamepad1.left_stick_y;
-            double rx = gamepad1.right_stick_x * 0.85;
-
-            lfMotor.setPower(Math.pow(y + x + rx, ctrlPow) * Math.signum(y + x + rx));
-            rfMotor.setPower(Math.pow(y - x - rx, ctrlPow) * Math.signum(y - x - rx));
-            lbMotor.setPower(Math.pow(y - x + rx, ctrlPow) * Math.signum(y - x + rx));
-            rbMotor.setPower(Math.pow(y + x - rx, ctrlPow) * Math.signum(y + x - rx));
-
-            //double l = gamepad1.right_stick_y;
-            //double r = gamepad1.left_stick_y;
-
-            //lfMotor.setPower(l);
-            //rfMotor.setPower(r);
+                lfMotor.setPower(Math.pow(y + x + rx, ctrlPow) * Math.signum(y + x + rx));
+                rfMotor.setPower(Math.pow(y - x - rx, ctrlPow) * Math.signum(y - x - rx));
+                lbMotor.setPower(Math.pow(y - x + rx, ctrlPow) * Math.signum(y - x + rx));
+                rbMotor.setPower(Math.pow(y + x - rx, ctrlPow) * Math.signum(y + x - rx));
+            } else if (firePressed) {
+                if (gamepad1.x) {
+                    fire(BallType.PURPLE);
+                    firePressed = true;
+                } else if (gamepad1.a) {
+                    fire(BallType.GREEN);
+                    firePressed = true;
+                }
+            } else if (!gamepad1.x && !gamepad1.a) {
+                firePressed = false;
+            }
         }
     }
 
