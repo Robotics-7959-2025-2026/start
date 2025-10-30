@@ -60,7 +60,9 @@ public class labubuTeleOp extends LinearOpMode {
                 rfMotor.setPower(Math.pow(y - x - rx, ctrlPow) * Math.signum(y - x - rx));
                 lbMotor.setPower(Math.pow(y - x + rx, ctrlPow) * Math.signum(y - x + rx));
                 rbMotor.setPower(Math.pow(y + x - rx, ctrlPow) * Math.signum(y + x - rx));
-            } else if (firePressed) {
+            }
+
+            if (firePressed) {
                 if (gamepad1.x) {
                     fire(BallType.PURPLE);
                     firePressed = true;
@@ -73,7 +75,6 @@ public class labubuTeleOp extends LinearOpMode {
             }
         }
     }
-
 
     private void fire(BallType select) {
         // Disable intake
