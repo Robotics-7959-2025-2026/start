@@ -16,6 +16,8 @@ public class labubuTeleOp extends LinearOpMode {
     private DcMotor shooterMotor = null;
     private Servo shooterServo = null;
 
+    private double servoStart = 0.0;
+
     private double ctrlPow = 1.0;
 
     @Override
@@ -34,7 +36,10 @@ public class labubuTeleOp extends LinearOpMode {
         shooterMotor.setDirection(DcMotorSimple.Direction.REVERSE);
         shooterServo.setDirection(Servo.Direction.REVERSE);
 
+        servoStart = shooterServo.getPosition();
+
         telemetry.addData("Status", "Initialized");
+        telemetry.addData("Debug", "Balulu2");
         telemetry.update();
 
         waitForStart();
@@ -60,18 +65,20 @@ public class labubuTeleOp extends LinearOpMode {
                 rbMotor.setPower(0.0);
             }
 
+            double pos = 0.0;
             // Hold left bumper to spin, then press the right bumper to shoot
             if (gamepad1.left_bumper) {
                 shooterMotor.setPower(1.0);
 
                 if (gamepad1.right_bumper) {
-                    shooterServo.setPosition(5);
-                } else {
-                    shooterServo.setPosition(0);
+                    // 1.0 = 300deg
+                    pos = 51.0 / 300.0;
                 }
-            } else{
+            } else {
                 shooterMotor.setPower(0.0);
             }
+
+            shooterServo.setPosition(pos);
         }
     }
 }
