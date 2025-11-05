@@ -24,7 +24,7 @@ public class labubuTeleOp extends LinearOpMode {
     public void runOpMode() {
         lfMotor = hardwareMap.get(DcMotor.class, "front_left_drive");
         rfMotor = hardwareMap.get(DcMotor.class, "front_right_drive");
-        lbMotor = hardwareMap.get(DcMotor.class, "front_left_drive");
+        lbMotor = hardwareMap.get(DcMotor.class, "back_left_drive");
         rbMotor = hardwareMap.get(DcMotor.class, "back_right_drive");
         shooterMotor = hardwareMap.get(DcMotor.class, "shooterMotor");
         shooterServo = hardwareMap.get(Servo.class, "shooterServo");
@@ -39,7 +39,7 @@ public class labubuTeleOp extends LinearOpMode {
         servoStart = shooterServo.getPosition();
 
         telemetry.addData("Status", "Initialized");
-        telemetry.addData("Debug", "Balulu2");
+        telemetry.addData("Debug", "Balulu3");
         telemetry.update();
 
         waitForStart();
@@ -52,12 +52,21 @@ public class labubuTeleOp extends LinearOpMode {
             ) {
                 double x = gamepad1.left_stick_x;
                 double y = gamepad1.left_stick_y;
-                double rx = gamepad1.right_stick_x * 0.85;
+                double rx = gamepad1.right_stick_x * 0.75;
 
-                lfMotor.setPower(Math.pow(y + x + rx, ctrlPow) * Math.signum(y + x + rx));
-                rfMotor.setPower(Math.pow(y - x - rx, ctrlPow) * Math.signum(y - x - rx));
-                lbMotor.setPower(Math.pow(y - x + rx, ctrlPow) * Math.signum(y - x + rx));
-                rbMotor.setPower(Math.pow(y + x - rx, ctrlPow) * Math.signum(y + x - rx));
+                telemetry.addData("drive/x", x + "");
+                telemetry.addData("drive/y", y + "");
+                telemetry.addData("drive/rx", rx + "");
+
+                //lfMotor.setPower(Math.pow(y - x - rx, ctrlPow) * Math.signum(y - x - rx));
+                //rfMotor.setPower(Math.pow(y + x + rx, ctrlPow) * Math.signum(y + x + rx));
+                //lbMotor.setPower(Math.pow(y + x - rx, ctrlPow) * Math.signum(y + x - rx));
+                //rbMotor.setPower(Math.pow(y - x + rx, ctrlPow) * Math.signum(y - x + rx));
+
+                lfMotor.setPower(y - x - rx);
+                rfMotor.setPower(y + x + rx);
+                lbMotor.setPower(y + x - rx);
+                rbMotor.setPower(y - x + rx);
             } else {
                 lfMotor.setPower(0.0);
                 rfMotor.setPower(0.0);
