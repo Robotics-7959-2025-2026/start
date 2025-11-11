@@ -6,6 +6,7 @@ import static org.firstinspires.ftc.teamcode.auton.Motors.*;
 import com.qualcomm.robotcore.eventloop.opmode.LinearOpMode;
 import com.qualcomm.robotcore.eventloop.opmode.OpMode;
 import com.qualcomm.robotcore.hardware.DcMotor;
+import com.qualcomm.robotcore.hardware.VoltageSensor;
 
 import org.firstinspires.ftc.robotcore.external.Telemetry;
 
@@ -25,8 +26,6 @@ public class Movement extends LinearOpMode {
         telemetry = opmode.telemetry;
 
         Motors.init(hardwareMap);
-        Motors.encoderPrep();
-
     }
 /*
     public void goToRadian(double desiredHeading, double power) {
@@ -130,11 +129,27 @@ public class Movement extends LinearOpMode {
         setAllPower(0);
         sleep(300);
     }
+
+    public void turnOnMotor(){
+        double nominalVoltage = 12.5;
+        double desiredPower = 0.95;
+        double batteryVoltage, correctedPower;
+
+        VoltageSensor battery = hardwareMap.voltageSensor.iterator().next();
+        batteryVoltage = battery.getVoltage();
+        correctedPower = desiredPower * (nominalVoltage / Math.max(batteryVoltage, 1.0));
+        correctedPower = Math.max(-1.0, Math.min(correctedPower, 1.0));
+        shooterMotor.setPower(correctedPower);
+    }
+
+    public void turnOffMotor(){
+        shooterMotor.setPower(0);
+    }
+
     public void shoot(){
-        shooterMotor.setPower(1.0);
-        sleep(1.5);
         shooterServo.setPosition(51.0 / 300.0);
-        shooterMotor.setPower(0.0);
+        sleep(1500);
+        shooterServo.setPosition(0);
     }
 
     public void holdIntake(){
@@ -343,19 +358,6 @@ public class Movement extends LinearOpMode {
 
     public boolean isSomeBusy(){
         return leftBack.isBusy() || leftFront.isBusy() || rightFront.isBusy() || rightBack.isBusy();
-    }
-
-    public void moveExtendoOut(double ticks){
-        extendo.setTargetPosition(-(int) ticks);
-        extendo.setMode(DcMotor.RunMode.RUN_TO_POSITION);
-        extendo.setPower(0.3);
-
-    }
-    public void moveExtendoIn(double ticks){
-        extendo.setTargetPosition((int) ticks);
-        extendo.setMode(DcMotor.RunMode.RUN_TO_POSITION);
-        extendo.setPower(0.3);
-
     }
 
 

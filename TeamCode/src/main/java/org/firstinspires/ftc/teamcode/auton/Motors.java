@@ -2,13 +2,14 @@ package org.firstinspires.ftc.teamcode.auton;
 
 import com.qualcomm.robotcore.hardware.DcMotor;
 import com.qualcomm.robotcore.hardware.DcMotorEx;
+import com.qualcomm.robotcore.hardware.DcMotorSimple;
 import com.qualcomm.robotcore.hardware.HardwareMap;
 import com.qualcomm.robotcore.hardware.Servo;
 
 public class Motors {
 
-    public static DcMotorEx leftFront, leftBack, rightBack, rightFront, liftL, extendo;
-    public static Servo elbowR, elbowL, wrist, outL, claw, outClaw, outR, outWrist;
+    public static DcMotorEx leftFront, leftBack, rightBack, rightFront, liftL, shooterMotor;
+    public static Servo elbowR, elbowL, wrist, outL, claw, outClaw, outR, outWrist, shooterServo;
 
     public static void init(HardwareMap hardwareMap) {
         leftFront = hardwareMap.get(DcMotorEx.class, "front_left_drive");
@@ -16,28 +17,29 @@ public class Motors {
         leftBack = hardwareMap.get(DcMotorEx.class, "back_left_drive");
         rightBack = hardwareMap.get(DcMotorEx.class, "back_right_drive");
 
-        extendo = hardwareMap.get(DcMotorEx.class, "extendo");
+        shooterMotor = hardwareMap.get(DcMotorEx.class, "shooterMotor");
+        shooterServo = hardwareMap.get(Servo.class, "shooterServo");
 
         leftFront.setDirection(DcMotor.Direction.FORWARD);
         rightFront.setDirection(DcMotor.Direction.REVERSE);
         leftBack.setDirection(DcMotor.Direction.FORWARD);
         rightBack.setDirection(DcMotor.Direction.REVERSE);
+
+        shooterMotor.setDirection(DcMotorSimple.Direction.REVERSE);
+        shooterServo.setDirection(Servo.Direction.REVERSE);
+
     }
 
     public static void encoderPrep(){
-        rightBack.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
-        rightFront.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
-        leftFront.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
-        leftBack.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
-        liftL.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
-        extendo.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
+        rightBack.setMode(DcMotorEx.RunMode.RUN_USING_ENCODER);
+        rightFront.setMode(DcMotorEx.RunMode.RUN_USING_ENCODER);
+        leftFront.setMode(DcMotorEx.RunMode.RUN_USING_ENCODER);
+        leftBack.setMode(DcMotorEx.RunMode.RUN_USING_ENCODER);
 
-        leftFront.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.BRAKE);
-        rightFront.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.BRAKE);
-        leftBack.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.BRAKE);
-        rightBack.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.BRAKE);
-        extendo.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.BRAKE);
-        liftL.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.BRAKE);
+        leftFront.setZeroPowerBehavior(DcMotorEx.ZeroPowerBehavior.BRAKE);
+        rightFront.setZeroPowerBehavior(DcMotorEx.ZeroPowerBehavior.BRAKE);
+        leftBack.setZeroPowerBehavior(DcMotorEx.ZeroPowerBehavior.BRAKE);
+        rightBack.setZeroPowerBehavior(DcMotorEx.ZeroPowerBehavior.BRAKE);
     }
 
     public static void runToPosition(){
@@ -52,7 +54,6 @@ public class Motors {
         leftBack.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
         rightBack.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
         rightFront.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
-        liftL.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
     }
     public static void runEncoders(){
         rightBack.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
