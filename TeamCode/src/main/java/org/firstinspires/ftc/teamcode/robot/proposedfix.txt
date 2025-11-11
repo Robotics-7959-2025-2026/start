@@ -1,0 +1,12 @@
+//ok this might be some bullshi but if we make the power between -1.0 and 1.0 and adjust based off nominal voltage we should be fine.
+double nominalVoltage = 12.5;
+double desiredPower = 1.0;
+
+VoltageSensor battery = hardwareMap.voltageSensor.iterator().next();
+double batteryVoltage = battery.getVoltage();
+
+
+double correctedPower = desiredPower * (nominalVoltage / Math.max(batteryVoltage, 1.0));
+correctedPower = Math.max(-1.0, Math.min(correctedPower, 1.0));
+
+shooterMotor.setPower(correctedPower);
