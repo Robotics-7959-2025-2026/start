@@ -19,11 +19,14 @@ public class shootingauto extends LinearOpMode{
         karel.turnOnMotor();
         sleep(1500);
         karel.shoot();
-        sleep(1000);
+        sleep(500);
+        karel.backwards(3, 0.5);
+        sleep(500);
         karel.shoot();
-        sleep(1000);
+        sleep(500);
+        karel.backwards(3, 0.5);
         karel.shoot();
-        sleep(1000);
+        sleep(500);
         karel.turnOffMotor();
 
         telemetry.addData("Status", "Running now");
