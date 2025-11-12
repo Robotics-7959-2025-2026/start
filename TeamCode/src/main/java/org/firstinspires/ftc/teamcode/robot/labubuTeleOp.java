@@ -76,32 +76,48 @@ public class labubuTeleOp extends LinearOpMode {
         }
     }
 
+    // Ensure the right type of ball is ready to shoot
+    private boolean alignBall(BallType select) {
+        // Already where we want it
+        if (spindexSlots[0] == select) {
+            return true;
+        }
+
+        // In intake
+        if (spindexSlots[2] == select) {
+            // Rotate 120
+            cycleSpindexSlots();
+            return true;
+        }
+
+        if (spindexSlots[1] == select) {
+            // Rotate 240
+            cycleSpindexSlots();
+            cycleSpindexSlots();
+            return true;
+        }
+
+        // Not there
+        return false;
+    }
+
     private void fire(BallType select) {
         // Disable intake
 
-        int index = -1;
-        for (int i = 0; i < 2; ++i) {
-            if (spindexSlots[i] == select) {
-                index = i;
-                break;
-            }
-        }
-
-        // Error! We don't have that ball loaded. Indicate to user?
-        if (index == -1) return;
-
-        for (int i = 0; i < index; ++i) {
-            cycleSpindexSlots();
-            // Rotate 120
+        if (!alignBall(select)) {
+            // Error: Ball not found
+            return;
         }
 
         // Rotate 60
         // Shoot
         // Rotate 60
 
-        // Move the newly-empty slot to [2]
-        spindexSlots[SHOOTING_POSITION] = BallType.EMPTY;
+        // Update state
         cycleSpindexSlots();
+        spindexSlots[1] = BallType.EMPTY;
+
+        // Rotate so intake is empty
         cycleSpindexSlots();
         // Rotate 120
 
