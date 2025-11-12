@@ -17,6 +17,13 @@ public class labubuTeleOp extends LinearOpMode {
     private DcMotor shooterMotor = null;
     private Servo shooterServo = null;
 
+    // Counted boolean
+    //   - False if <= 0
+    //   - True if >= 1
+    //   - Set to true by incrementing
+    //   - Set to false by decrementing
+    private int intakeUsers = 0;
+
     static int INTAKE_POSITION = 2;
     static int SHOOTING_POSITION = 0;
     private BallType[] spindexSlots = {BallType.EMPTY, BallType.EMPTY, BallType.EMPTY};
@@ -45,6 +52,8 @@ public class labubuTeleOp extends LinearOpMode {
         telemetry.update();
 
         waitForStart();
+
+        enableIntake();
 
         while (opModeIsActive()) {
             telemetry.update();
@@ -101,17 +110,15 @@ public class labubuTeleOp extends LinearOpMode {
         return false;
     }
 
-    private void fire(BallType select) {
-        // Disable intake
-
-        if (!alignBall(select)) {
-            // Error: Ball not found
-            return;
-        }
-
-        // Rotate 60
-        // Shoot
-        // Rotate 60
+    private void shoot() {
+        disableIntake();
+        rotate60();
+        // Turn on spinner
+        // Wait for spin up
+        // Lift ball
+        // Wait for ball to launch
+        // Turn off spinner
+        rotate60();
 
         // Update state
         cycleSpindexSlots();
@@ -119,17 +126,28 @@ public class labubuTeleOp extends LinearOpMode {
 
         // Rotate so intake is empty
         cycleSpindexSlots();
-        // Rotate 120
+        rotate120();
 
-        // Enable intake (guaranteed to work)
+        enableIntake();
+    }
+
+    private void fire(BallType select) {
+        disableIntake();
+
+        if (!alignBall(select)) {
+            // Error: Ball not found
+            return;
+        }
+
+        shoot();
+
+        enableIntake();
     }
 
     private void onIntake(BallType color) {
-        // Rotate 120
+        rotate120();
+        spindexSlots[INTAKE_POSITION] = color;
         cycleSpindexSlots();
-        // Index 2 is now index 0
-        // Hithertofore, use shooting position instead
-        spindexSlots[SHOOTING_POSITION] = color;
     }
 
     private void cycleSpindexSlots() {
@@ -137,5 +155,29 @@ public class labubuTeleOp extends LinearOpMode {
         spindexSlots[2] = spindexSlots[1];
         spindexSlots[1] = spindexSlots[0];
         spindexSlots[0] = z0;
+    }
+
+    private void rotate120() {
+        disableIntake();
+        // TODO
+        enableIntake();
+    }
+
+    private void rotate60() {
+        disableIntake();
+        // TODO
+        enableIntake();
+    }
+
+    private void disableIntake() {
+        intakeUsers -= 1;
+        if (intakeUsers < 1) return;
+        // TODO
+    }
+
+    private void enableIntake() {
+        intakeUsers += 1;
+        if (intakeUsers > 0) return;
+        // TODO
     }
 }
