@@ -14,7 +14,7 @@ public class OfficialTeleop extends LinearOpMode {
     private DcMotor lbMotor = null;
     private DcMotor rbMotor = null;
     private double nominalVoltage = 12.5;
-    private double desiredPower = 1.0;
+    private double desiredPower = 0.9;
     private double batteryVoltage, correctedPower;
     private DcMotor shooterMotor = null;
     private Servo shooterServo = null;
