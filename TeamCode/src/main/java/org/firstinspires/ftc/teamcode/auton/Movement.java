@@ -132,7 +132,18 @@ public class Movement extends LinearOpMode {
 
     public void turnOnMotor(){
         double nominalVoltage = 12.5;
-        double desiredPower = 0.95;
+        double desiredPower = 0.9;
+        double batteryVoltage, correctedPower;
+
+        VoltageSensor battery = hardwareMap.voltageSensor.iterator().next();
+        batteryVoltage = battery.getVoltage();
+        correctedPower = desiredPower * (nominalVoltage / Math.max(batteryVoltage, 1.0));
+        correctedPower = Math.max(-1.0, Math.min(correctedPower, 1.0));
+        shooterMotor.setPower(correctedPower);
+    }
+
+    public void setMotorSpeed(double desiredPower){
+        double nominalVoltage = 12.5;
         double batteryVoltage, correctedPower;
 
         VoltageSensor battery = hardwareMap.voltageSensor.iterator().next();
