@@ -12,23 +12,26 @@ public class shootingautoStrafeRight extends LinearOpMode{
         Movement karel = new Movement(this);
         //view the webcam now, you cant check camera stream once the game is initialized.
         waitForStart();
-        karel.backwards(18, 0.5);
+        karel.backwards(20, 0.5);
         //karel.turnOnMotor();
-        karel.setMotorSpeed(0.95);
+        karel.setMotorSpeed(0.92);
         sleep(1500);
         karel.shoot();
         karel.setMotorSpeed(0.88);
         sleep(500);
         sleep(500);
         karel.shoot();
-        karel.setMotorSpeed(0.92);
+        karel.setMotorSpeed(0.89);
         sleep(500);
-        karel.backwards(3, 0.5);
+        karel.backwards(4, 0.5);
         sleep(1000);
         karel.shoot();
         sleep(500);
         karel.turnOffMotor();
-        karel.strafeRight(20, 0.5);
+        //karel.strafeRight(40, 0.5);
+        karel.turnRight(-90, 0.5);
+        sleep(300);
+        karel.forwards(20, 0.5);
 
         telemetry.addData("Status", "Running now");
         telemetry.update();
