@@ -4,7 +4,7 @@ import com.qualcomm.robotcore.eventloop.opmode.Autonomous;
 import com.qualcomm.robotcore.eventloop.opmode.LinearOpMode;
 
 
-@Autonomous(name="shootingauto")
+@Autonomous(name="shootingautoReturnComp2")
 public class shootingautoReturn extends LinearOpMode{
 
     public void runOpMode() throws InterruptedException{

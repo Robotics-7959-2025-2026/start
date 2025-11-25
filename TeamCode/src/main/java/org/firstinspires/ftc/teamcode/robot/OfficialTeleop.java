@@ -7,7 +7,7 @@ import com.qualcomm.robotcore.hardware.DcMotorSimple;
 import com.qualcomm.robotcore.hardware.Servo;
 import com.qualcomm.robotcore.hardware.VoltageSensor;
 
-@TeleOp(name = "TeleOp for November 15th Comp")
+@TeleOp(name = "Comp2/2526")
 public class OfficialTeleop extends LinearOpMode {
     private DcMotor lfMotor = null;
     private DcMotor rfMotor = null;
